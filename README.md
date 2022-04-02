@@ -108,3 +108,16 @@ docs에서 option 카테고리에 가보면 다양한 옵션을 찾을 수 있�
 
 `docker start CONTAINER` : 컨테이너 실행
 
+***
+
+# 3주차 과제
+<img width="741" alt="스크린샷 2022-04-02 오후 5 41 27" src="https://user-images.githubusercontent.com/88263178/161375031-22e0b8ff-923c-4c18-b32f-0de6b3155b5c.png">
+
+- profile
+  - name, 상태 메세지
+  - user와 일대일 관계
+
+- user
+  - 장고의 기본 User 모델 사용
+  - username, email, password
+
