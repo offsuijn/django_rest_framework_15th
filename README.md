@@ -111,7 +111,9 @@ docs에서 option 카테고리에 가보면 다양한 옵션을 찾을 수 있�
 ***
 
 # 3주차 과제
-refactoring: 중복되는 필드인 생성 시간, 수정 시간을 timestamp 추상 클래스로 만들어서 상속관계로 구현
+⚒️ refactoring: 중복되는 필드인 생성 시간, 수정 시간을 timestamp 추상 클래스로 만들어서 상속관계로 구현
+## 데이터베이스 
+<img width="770" alt="ERD" src="https://user-images.githubusercontent.com/88263178/161997711-49c05ae8-7f4b-4979-87b3-8d31424e7e17.png">
 
 - profile
   - 인스타그램 프로필
@@ -157,3 +159,19 @@ TIMESTAMP는 데이터 입출력시 time_zone 시스템 변수 값을 체크해 
 따라서 해외에 나가는 사이트라면 TIMESTAMP를 고려해야할 것 같습니다.
 
 저는 이번 인스타그램 프로젝트는 한국에서만 사용하는 것으로 판단하고 DATETIME으로 지정하였습니다.
+
+## ORM 적용
+
+### 객체 생성
+
+<img width="1523" alt="ORM_객체생성" src="https://user-images.githubusercontent.com/88263178/161998117-22b8edba-de7d-400c-a5a2-b765e25107d8.png">
+
+
+## 객체 조회
+<img width="725" alt="ORM_객체조회" src="https://user-images.githubusercontent.com/88263178/161998291-48e2dcff-f71c-4012-8fc8-b9a6c91a221f.png">
+
+## filter 사용 
+
+<img width="1519" alt="ORM_filter1" src="https://user-images.githubusercontent.com/88263178/161998335-5f473f76-3b2c-4a67-8949-3e47ca99ce86.png">
+
+<img width="1542" alt="ORM_filter2" src="https://user-images.githubusercontent.com/88263178/161998346-1d086b9e-0f65-4ed9-9922-3e8213b8be91.png">
