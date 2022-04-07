@@ -175,3 +175,46 @@ TIMESTAMP는 데이터 입출력시 time_zone 시스템 변수 값을 체크해 
 <img width="1519" alt="ORM_filter1" src="https://user-images.githubusercontent.com/88263178/161998335-5f473f76-3b2c-4a67-8949-3e47ca99ce86.png">
 
 <img width="1542" alt="ORM_filter2" src="https://user-images.githubusercontent.com/88263178/161998346-1d086b9e-0f65-4ed9-9922-3e8213b8be91.png">
+
+***
+
+# 4주차 과제
+
+## 데이터 삽입
+### Post, Comment 모델
+Comment가 Post를 fk로 가지고 있습니다.
+<img width="864" alt="스크린샷 2022-04-07 오후 3 28 04" src="https://user-images.githubusercontent.com/88263178/162134254-68a754aa-445d-4c23-bb6c-46edd437d4fe.png">
+
+### Serializer
+Nested Serializer로 구현했습니다.
+
+<img width="618" alt="스크린샷 2022-04-07 오후 3 30 51" src="https://user-images.githubusercontent.com/88263178/162134654-4485a6c3-a2ed-4a84-851c-23a14ca102fa.png">
+
+그런데 shell에서 데이터를 넣고 출력해보면 아래의 사진처럼 comments가 보이지 않는 오류가 발생했습니다.
+<img width="676" alt="nested_serializer_error" src="https://user-images.githubusercontent.com/88263178/162134864-9e5501a8-b5ef-4506-9502-c0777740175b.png">
+
+원인을 찾아보니 model에서 related_name이라는 필드가 있는 것을 발견하고 추가해주니 정상적으로 comments가 출력되는 것을 볼 수 있었습니다.
+<img width="862" alt="ns_error_모델변경" src="https://user-images.githubusercontent.com/88263178/162134937-395dc3bc-a614-465c-8af0-653999a63477.png">
+<img width="1383" alt="ns_error_해결코드" src="https://user-images.githubusercontent.com/88263178/162135082-d8ef1e0c-a97a-40fe-ba0a-a4679f23bd8b.png">
+
+그리고 장고 admin 페이지에서 Post와 Comment를 확인해보았습니다.
+<img width="804" alt="post" src="https://user-images.githubusercontent.com/88263178/162135398-9804aa92-513b-4c3e-9b5a-672735ece4be.png">
+
+<img width="793" alt="comment" src="https://user-images.githubusercontent.com/88263178/162135408-c32e9c79-598c-4f99-83a8-1c0cd82b90cc.png">
+
+## 모든 데이터를 가져오는 API
+모든 'Post'의 list를 가져오는 API 요청 결과
+
+url : api/post/ GET
+
+<img width="404" alt="GET api:post" src="https://user-images.githubusercontent.com/88263178/162135599-3e599cb9-36e2-4321-a0c2-957d769059b1.png">
+
+## 새로운 데이터를 create하도록 요청하는 API
+Post를 추가하는 API 요청 결과
+
+url : api/post/ POST
+
+<img width="637" alt="POST api:post:" src="https://user-images.githubusercontent.com/88263178/162135684-c3b45f91-8ab3-4189-801c-99907d1acb47.png">
+
+## 회고
+
