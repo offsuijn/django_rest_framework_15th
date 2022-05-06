@@ -1,22 +1,20 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from api.models import *
 from api.serializers import *
 
-@csrf_exempt
-def post_list(request):
+from rest_framework.views import APIView
 
-    if request.method == 'GET':
+class PostList(APIView):
+    def get(self, request):
         post = Post.objects.all()
         serializer = PostSerializer(post, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-    elif request.method == 'POST':
+    def post(self, request):
         data = JSONParser().parse(request)
         serializer = PostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201, safe=False)
         return JsonResponse(serializer.errors, status=400, safe=False)
+
