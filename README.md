@@ -309,3 +309,93 @@ url : `api/posts/<int:pk>/` DELETE
 Postman을 이용해서 API 테스트를 하는데 계속 이상한 오류가 나서 일단 당황하고 구글에 여기저기 찾아보았는데, 결국엔 request url 끝에 /를 안 붙여서가 원인인 케이스가 2번 정도 났었습니다...
 
 항상 그렇지만 오류가 나면 오타를 1순위로 의심해야한다는 것을 다시 깨닫게 되었습니다 🥲
+
+# 6주차 과제
+## Viewset으로 리팩토링하기
+### Post, Comment Viewset
+```python
+class PostViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PostFilter
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+```
+
+### url 매핑
+```python
+router = routers.DefaultRouter()
+router.register(r'posts', PostViewSet)
+router.register(r'comments', CommentViewSet)
+
+urlpatterns = router.urls
+```
+
+## filter 기능 구현하기
+
+### PostFilter
+```python
+class PostFilter(FilterSet):
+    user = filters.CharFilter(method='filter_user')
+    content = filter.CharFilter(field_name='content', lookup_expr='icontains')
+
+    class Meta:
+        model = Post
+        fields = ['user', 'content']
+
+    def filter_user(self, queryset, name, value):
+        return queryset.filter(**{
+            name: value,
+        })
+```
+
+## 공부한 내용 정리
+
+### filter()의 조건 키워드
+
+#### 키워드 앞에 쓰이는 `__`
+- 조건을 사용할 떄
+- 외부 모델 필드를 사용할 때
+
+#### contains / icontains
+지정한 문자열을 포함하는 자료 검색
+
+`queryset.filter(title__contains='hi')`
+
+`queryset.filter(title__icontains='hi')` icontains는 대소문자 구별 X
+
+#### exact / iexact
+정확히 일치하는 자료 검색
+
+`queryset.filter(title__exact='hi')`
+
+`queryset.filter(title__iexact='hi')` iexact는 대소문자 구별 X
+
+
+#### gt / lt / gte / lte
+비교 연산을 통한 자료 검색
+
+>gt (greater than) : >
+>
+>lt (less than) : <
+>
+>gte (greater than or equal) : >=
+>
+>lte (less than or equal) : <=
+
+`queryset.filter(id__gt=1)`
+
+#### startswith / endswith
+지정한 문자열로 시작하는\[끝나는\] 자료 검색
+
+`queryset.filter(title__startswith='hihi')`
+
+`queryset.filter(title__istartswith='hihi')` istartswith는 대소문자 구별 X
+
+## 간단한 회고
+View를 계속해서 리팩토링하는 과정에서 코드가 점점 짧아지고, 한 눈에 들어오는 것을 보면서 장고는 정말 편리하다는 것을 다시금 느꼈다!
+
+시험이 껴있어서 permission과 validation을 구현하지 못했는데 다음 주 과제에는 꼭 완성해보고싶다 🤓
